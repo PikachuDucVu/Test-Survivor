@@ -99,49 +99,40 @@ export class PlayerRenderSystem extends System {
     this.batch.setProjection(this.cameraGame.combined);
     this.batch.begin();
     if (healthPlayer.hp >= 0) {
-      // if (this.levelState.currentLevel === 1) {
-      //   this.batch.draw(
-      //     this.knight4,
-      //     spartial.pos.x - this.offset,
-      //     spartial.pos.y - this.offset,
-      //     65,
-      //     65
-      //   );
-      // }
-      // if (this.levelState.currentLevel === 2) {
-      //   this.batch.draw(
-      //     this.knight3,
-      //     spartial.pos.x - this.offset,
-      //     spartial.pos.y - this.offset,
-      //     65,
-      //     65
-      //   );
-      // }
-      // if (this.levelState.currentLevel === 3) {
-      //   this.batch.draw(
-      //     this.knight2,
-      //     spartial.pos.x - this.offset,
-      //     spartial.pos.y - this.offset,
-      //     65,
-      //     65
-      //   );
-      // }
-      // if (this.levelState.currentLevel >= 4) {
-      //   this.batch.draw(
-      //     this.knight1,
-      //     spartial.pos.x - this.offset,
-      //     spartial.pos.y - this.offset,
-      //     65,
-      //     65
-      //   );
-      // }
-      if (this.levelState.currentLevel >= 1) {
+      if (this.levelState.currentLevel === 1) {
         this.batch.draw(
-          this.husband,
-          spartial.pos.x - this.offset,
+          this.knight1,
+          spartial.pos.x - this.offset - 7,
           spartial.pos.y - this.offset,
-          55,
-          70
+          65,
+          65
+        );
+      }
+      if (this.levelState.currentLevel === 2) {
+        this.batch.draw(
+          this.knight2,
+          spartial.pos.x - this.offset - 7,
+          spartial.pos.y - this.offset,
+          65,
+          65
+        );
+      }
+      if (this.levelState.currentLevel === 3) {
+        this.batch.draw(
+          this.knight3,
+          spartial.pos.x - this.offset - 7,
+          spartial.pos.y - this.offset,
+          65,
+          65
+        );
+      }
+      if (this.levelState.currentLevel >= 4) {
+        this.batch.draw(
+          this.knight4,
+          spartial.pos.x - this.offset - 7,
+          spartial.pos.y - this.offset,
+          65,
+          65
         );
       }
     }

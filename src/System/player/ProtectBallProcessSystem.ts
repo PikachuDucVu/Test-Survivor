@@ -40,10 +40,10 @@ export class ProtectBallProcessSystem extends System {
           Health
         );
         if (
-          spartialEnemy.pos.x <= spartialProtectBall.pos.x + 25 &&
-          spartialEnemy.pos.x >= spartialProtectBall.pos.x - 25 &&
-          spartialEnemy.pos.y <= spartialProtectBall.pos.y + 25 &&
-          spartialEnemy.pos.y >= spartialProtectBall.pos.y - 25
+          spartialEnemy.pos.x <= spartialProtectBall.pos.x + 35 &&
+          spartialEnemy.pos.x >= spartialProtectBall.pos.x - 35 &&
+          spartialEnemy.pos.y <= spartialProtectBall.pos.y + 35 &&
+          spartialEnemy.pos.y >= spartialProtectBall.pos.y - 35
         ) {
           healthEnemy.hp = Math.max(
             healthEnemy.hp - damageProtectBall.damage,

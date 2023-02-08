@@ -14,17 +14,10 @@ import { GameState } from "../dto/GameState";
 export class EnemyRenderSystem extends System {
   @Inject("assetManager") assetManager: AssetManager;
   @Inject("shapeRenderer") shapeRenderer: ShapeRenderer;
-  @Inject("batch") batch: PolygonBatch;
   @Inject("gameState") gameState: GameState;
-  @Inject("cameraGame") cameraGame: OrthoCamera;
 
   width = 50;
   offset = 25;
-  wife: Texture;
-
-  initialized(): void {
-    this.wife = this.assetManager.getTexture("wife") as Texture;
-  }
 
   process(): void {
     this.shapeRenderer.begin();
@@ -37,13 +30,13 @@ export class EnemyRenderSystem extends System {
         this.gameState.enemyIDs[i],
         Health
       );
-      // this.shapeRenderer.circle(
-      //   true,
-      //   spartial.pos.x,
-      //   spartial.pos.y,
-      //   spartial.radius,
-      //   Color.BLUE
-      // );
+      this.shapeRenderer.circle(
+        true,
+        spartial.pos.x,
+        spartial.pos.y,
+        spartial.radius,
+        Color.BLUE
+      );
       this.shapeRenderer.rect(
         true,
         spartial.pos.x - this.offset,
@@ -61,24 +54,5 @@ export class EnemyRenderSystem extends System {
       );
     }
     this.shapeRenderer.end();
-    this.batch.setProjection(this.cameraGame.combined);
-    this.batch.begin();
-    for (let i = 0; i < this.gameState.enemyIDs.length; i++) {
-      const spartial = this.world.getComponent(
-        this.gameState.enemyIDs[i],
-        Spartial
-      );
-      this.batch.draw(
-        this.wife,
-        spartial.pos.x - this.offset - 15,
-        spartial.pos.y,
-        65,
-        65,
-        0,
-        0,
-        -0.5
-      );
-    }
-    this.batch.end();
   }
 }

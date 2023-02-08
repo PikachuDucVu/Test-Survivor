@@ -29,12 +29,14 @@ export class UpgradeLevelSystem extends System {
       this.levelState.maxExp += 10;
       this.configGame.enemysRespawnTime *= 2;
       this.powerEnemy.hp += 75;
-      this.configGame.amountProtectBall++;
       this.configGame.speedProtectBall++;
 
       if (this.configGame.cooldownBullet > 0.3) {
         this.configGame.cooldownBullet -= 0.075;
       }
+      if (this.configGame.amountProtectBall <= 15) {
+      }
+      this.configGame.amountProtectBall++;
       for (let i = this.configGame.amountProtectBall - 1; i >= 0; i--) {
         this.world.deleteEntity(this.gameState.protectBall[i]);
         this.gameState.protectBall.splice(i, 1);

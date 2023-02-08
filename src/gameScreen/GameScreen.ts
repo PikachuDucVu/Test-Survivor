@@ -39,6 +39,9 @@ import { PlayerMovementSystem } from "../System/PlayerMovementSystem";
 import { PlayerRenderSystem } from "../System/PlayerRenderSystem";
 import { UpgradeLevelSystem } from "../System/UpgradeLevelSystem";
 import { UIRenderSystem } from "../System/UIRenderSystem";
+import { SuperBulletProcessSystem } from "../System/player/SuperBulletProcessSystem";
+import { SuperBulletSpawningSystem } from "../System/player/SuperBulletSpawningSystem";
+import { SuperBulletRenderSystem } from "../System/player/SuperBulletRenderSystem";
 
 export const createGameScreen = async (
   assetManager: AssetManager,
@@ -88,7 +91,7 @@ export const createGameScreen = async (
     role: 0,
     exp: 1,
     maxExp: 10,
-    currentLevel: 2,
+    currentLevel: 10,
   };
   const powerEnemy: PowerEnemy = {
     hp: 100,
@@ -142,6 +145,8 @@ export const createGameScreen = async (
   world.addSystem(new ProtectBallSpawningSystem(), true);
   world.addSystem(new ProtectBallProcessSystem(), true);
   world.addSystem(new UpgradeLevelSystem(), true);
+  world.addSystem(new SuperBulletSpawningSystem(), true);
+  world.addSystem(new SuperBulletProcessSystem(), true);
 
   world.addSystem(new GridMapRenderSystem(), false);
   world.addSystem(new PlayerRenderSystem(), false);
@@ -152,6 +157,7 @@ export const createGameScreen = async (
   world.addSystem(new ProtectBallRenderSystem(), false);
   world.addSystem(new PauseMovementSystem(), false);
   world.addSystem(new UIRenderSystem(), false);
+  world.addSystem(new SuperBulletRenderSystem(), false);
 
   gl.clearColor(0, 0, 0, 1);
 

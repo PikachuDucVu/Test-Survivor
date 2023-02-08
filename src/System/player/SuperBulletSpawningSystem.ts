@@ -8,56 +8,72 @@ import { GameState } from "../../dto/GameState";
 import { JoyStick } from "../../dto/JoyStick";
 import { LevelState } from "../../dto/LevelState";
 
+function getRandomInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 export class SuperBulletSpawningSystem extends System {
   @Inject("configGame") configGame: ConfigGame;
   @Inject("joyStick") joyStick: JoyStick;
   @Inject("gameState") gameState: GameState;
   @Inject("levelState") levelState: LevelState;
-  
-  time = 0;
+
+  timesuperBullet = 0;
   tempNumber = 0;
   tempVec2 = new Vector2();
-  offset = 175;
-  
+
   process(): void {
-    this.time += this.world.delta;
-    
+    this.timesuperBullet += this.world.delta;
+
     const spartialPlayer = this.world.getComponent(
       this.gameState.playerID,
       Spartial
     );
-    if (
-      this.time >= this.configGame.bigBallCooldown &&
-      this.gameState.enemyIDs.length &&
-      this.levelState.currentLevel >= 10
-    ) {
 
-      const BigBallArchetype = new Archetype([Spartial, Moveable, Damage]);
-      const BigBall = this.world.createEntityByArchetype(BigBallArchetype);
-      this.gameState.superBulletIDs.push(BigBall);
-      const spartialBigBall = this.world.getComponent(
+    //superBullet
+    if (
+      this.timesuperBullet >= this.configGame.bigBallCooldown &&
+      this.gameState.enemyIDs.length
+    ) {
+      const superBulletArchetype = new Archetype([Spartial, Moveable, Damage]);
+      const superBullet =
+        this.world.createEntityByArchetype(superBulletArchetype);
+      this.gameState.superBulletIDs.push(superBullet);
+      const spartialsuperBullet = this.world.getComponent(
         this.gameState.superBulletIDs[this.gameState.superBulletIDs.length - 1],
         Spartial
       );
-      const moveAbleBigBall = this.world.getComponent(
+      const moveAblesuperBullet = this.world.getComponent(
         this.gameState.superBulletIDs[this.gameState.superBulletIDs.length - 1],
         Moveable
       );
-      const damageBigBall = this.world.getComponent(
+      const damagesuperBullet = this.world.getComponent(
         this.gameState.superBulletIDs[this.gameState.superBulletIDs.length - 1],
         Damage
       );
 
-      damageBigBall.setDmg(15);
-      spartialBigBall.pos.set(this.offset, this.offset);
-      spartialBigBall.pos.rotate(
-        (spartialBigBall.rotation -= this.configGame.speedProtectBall)
+      damagesuperBullet.setDmg((15 * this.levelState.currentLevel) / 7);
+
+      const spartialEnemy = this.world.getComponent(
+        this.gameState.enemyIDs[
+          getRandomInt(0, this.gameState.enemyIDs.length)
+        ],
+        Spartial
       );
-      spartialBigBall.pos.addVector(spartialPlayer.pos);
-      
+      this.tempVec2
+        .setVector(spartialEnemy.pos)
+        .subVector(spartialPlayer.pos)
+        .nor();
 
+      moveAblesuperBullet.setDirection(this.tempVec2.x, this.tempVec2.y);
+      moveAblesuperBullet.speed = 15;
 
+      spartialsuperBullet.setPos(spartialPlayer.pos.x, spartialPlayer.pos.y);
+      spartialsuperBullet.setRadius(
+        10 + (10 * this.levelState.currentLevel) / 5
+      );
+
+      this.timesuperBullet = 0;
     }
-      
   }
 }
