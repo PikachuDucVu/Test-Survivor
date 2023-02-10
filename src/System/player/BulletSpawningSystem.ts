@@ -130,7 +130,7 @@ export class BulletSpawningSystem extends System {
             }
           }
           spartialBullet.setPos(spartialPlayer.pos.x, spartialPlayer.pos.y);
-          spartialBullet.setRadius(10);
+          spartialBullet.setRadius(10 + this.levelState.currentLevel * 2);
 
           moveAbleBullet.setDirection(this.tempVec2.x, this.tempVec2.y);
           moveAbleBullet.direction.rotate(-10 * i);

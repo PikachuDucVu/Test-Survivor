@@ -33,7 +33,8 @@ export class SuperBulletSpawningSystem extends System {
     //superBullet
     if (
       this.timesuperBullet >= this.configGame.bigBallCooldown &&
-      this.gameState.enemyIDs.length
+      this.gameState.enemyIDs.length &&
+      this.levelState.currentLevel >= 10
     ) {
       const superBulletArchetype = new Archetype([Spartial, Moveable, Damage]);
       const superBullet =

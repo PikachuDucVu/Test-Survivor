@@ -27,7 +27,7 @@ export class UpgradeLevelSystem extends System {
       this.levelState.exp = 1;
       this.levelState.currentLevel++;
       this.levelState.maxExp += 10;
-      this.configGame.enemysRespawnTime *= 2;
+      this.configGame.enemysRespawnTime /= 1.25;
       this.powerEnemy.hp += 75;
       this.configGame.speedProtectBall++;
 

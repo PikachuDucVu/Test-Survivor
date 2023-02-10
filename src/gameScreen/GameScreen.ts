@@ -91,7 +91,7 @@ export const createGameScreen = async (
     role: 0,
     exp: 1,
     maxExp: 10,
-    currentLevel: 10,
+    currentLevel: 1,
   };
   const powerEnemy: PowerEnemy = {
     hp: 100,
@@ -100,7 +100,7 @@ export const createGameScreen = async (
 
   const configGame: ConfigGame = {
     cooldownBullet: 0.5,
-    enemysRespawnTime: 0.75,
+    enemysRespawnTime: 1.25,
     amountProtectBall: levelState.currentLevel - 1,
     speedProtectBall: 2.5,
     bigBallCooldown: 1.25,

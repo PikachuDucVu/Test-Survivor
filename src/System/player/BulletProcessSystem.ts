@@ -16,6 +16,7 @@ export class BulletProcessSystem extends System {
   time = 0;
   tempNumber: number = 0;
   tempVec2 = new Vector2();
+  offset = 2.5;
 
   process(): void {
     this.time += this.world.delta;
@@ -66,10 +67,14 @@ export class BulletProcessSystem extends System {
           Health
         );
         if (
-          spartialEnemy.pos.x <= spartialBullet.pos.x + 25 &&
-          spartialEnemy.pos.x >= spartialBullet.pos.x - 25 &&
-          spartialEnemy.pos.y <= spartialBullet.pos.y + 25 &&
-          spartialEnemy.pos.y >= spartialBullet.pos.y - 25
+          spartialEnemy.pos.x <=
+            spartialBullet.pos.x + spartialBullet.radius * this.offset &&
+          spartialEnemy.pos.x >=
+            spartialBullet.pos.x - spartialBullet.radius * this.offset &&
+          spartialEnemy.pos.y <=
+            spartialBullet.pos.y + spartialBullet.radius * this.offset &&
+          spartialEnemy.pos.y >=
+            spartialBullet.pos.y - spartialBullet.radius * this.offset
         ) {
           heathEnemy.hp = Math.max(heathEnemy.hp - damageBullet.damage, 0);
           this.world.deleteEntity(this.gameState.bulletIDs[i]);
