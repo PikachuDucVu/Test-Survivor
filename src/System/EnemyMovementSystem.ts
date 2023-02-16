@@ -1,6 +1,7 @@
 import { System, Inject } from "flat-ecs";
 import { Vector2 } from "gdxts";
 import { Health } from "../component/Health";
+import { Moveable } from "../component/Movable";
 import { Spartial } from "../component/Spatial";
 import { GameState } from "../dto/GameState";
 import { JoyStick } from "../dto/JoyStick";
@@ -34,13 +35,20 @@ export class EnemyMovementSystem extends System {
         this.gameState.enemyIDs[i],
         Spartial
       );
+      const moveableEnemy = this.world.getComponent(
+        this.gameState.enemyIDs[i],
+        Moveable
+      );
 
       this.direction
         .setVector(spartialPlayer.pos)
         .subVector(spartialEnemy.pos)
         .nor();
 
-      spartialEnemy.pos.add(this.direction.x * 3, this.direction.y * 3);
+      spartialEnemy.pos.add(
+        this.direction.x * moveableEnemy.speed,
+        this.direction.y * moveableEnemy.speed
+      );
     }
   }
 }

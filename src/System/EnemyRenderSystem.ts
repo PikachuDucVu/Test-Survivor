@@ -1,12 +1,5 @@
 import { Inject, System } from "flat-ecs";
-import {
-  AssetManager,
-  Color,
-  OrthoCamera,
-  PolygonBatch,
-  ShapeRenderer,
-  Texture,
-} from "gdxts";
+import { AssetManager, Color, ShapeRenderer } from "gdxts";
 import { Health } from "../component/Health";
 import { Spartial } from "../component/Spatial";
 import { GameState } from "../dto/GameState";
@@ -43,7 +36,7 @@ export class EnemyRenderSystem extends System {
         spartial.pos.y - this.offset - 15,
         this.width * (healthEnemy.hp / healthEnemy.maxHP),
         15,
-        Color.RED
+        healthEnemy.hp >= 45 ? Color.GREEN : Color.RED
       );
       this.shapeRenderer.rect(
         false,

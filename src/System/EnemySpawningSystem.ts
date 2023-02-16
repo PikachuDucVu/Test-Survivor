@@ -1,6 +1,7 @@
 import { System, Inject, Archetype } from "flat-ecs";
 import { Vector2 } from "gdxts";
 import { Health } from "../component/Health";
+import { Moveable } from "../component/Movable";
 import { Spartial } from "../component/Spatial";
 import { Constants } from "../Constant";
 import { ConfigGame } from "../dto/ConfigGame";
@@ -18,7 +19,7 @@ export class EnemySpawningSystem extends System {
   @Inject("powerEnemy") powerEnemy: PowerEnemy;
   @Inject("levelState") levelState: LevelState;
 
-  MAX_ENEMIES = 40;
+  MAX_ENEMIES = 1;
 
   time = -6;
 
@@ -35,12 +36,16 @@ export class EnemySpawningSystem extends System {
       this.time >= this.configGame.enemysRespawnTime &&
       this.gameState.enemyIDs.length < this.MAX_ENEMIES
     ) {
-      const enemyArchetype = new Archetype([Spartial, Health]);
+      const enemyArchetype = new Archetype([Spartial, Health, Moveable]);
       const enemy = this.world.createEntityByArchetype(enemyArchetype);
       this.gameState.enemyIDs.push(enemy);
       const spartialEnemy = this.world.getComponent(
         this.gameState.enemyIDs[this.gameState.enemyIDs.length - 1],
         Spartial
+      );
+      const moveableEnemy = this.world.getComponent(
+        this.gameState.enemyIDs[this.gameState.enemyIDs.length - 1],
+        Moveable
       );
 
       do {
@@ -61,6 +66,7 @@ export class EnemySpawningSystem extends System {
 
       spartialEnemy.pos.setVector(this.posSpawnEnemy);
       spartialEnemy.setRadius(25);
+      moveableEnemy.speed = 3;
       const heathEnemy = this.world.getComponent(
         this.gameState.enemyIDs[this.gameState.enemyIDs.length - 1],
         Health

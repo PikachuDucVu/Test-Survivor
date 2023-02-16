@@ -1,9 +1,8 @@
 export interface ConfigGame {
-  cooldownBullet: number;
+  attackSpeed: number;
   enemysRespawnTime: number;
-  amountProtectBall: number;
-  speedProtectBall: number;
   bigBallCooldown: number;
+  fireBallAttackSpeed: number;
 
   start: boolean;
   pause: boolean;

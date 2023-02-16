@@ -1,5 +1,5 @@
 import { System, Inject } from "flat-ecs";
-import { Color, OrthoCamera, ShapeRenderer, Vector2 } from "gdxts";
+import { Color, OrthoCamera, ShapeRenderer } from "gdxts";
 import { Health } from "../../component/Health";
 import { GameState } from "../../dto/GameState";
 import { JoyStick } from "../../dto/JoyStick";

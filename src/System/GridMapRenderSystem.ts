@@ -1,8 +1,8 @@
 import { System, Inject } from "flat-ecs";
 import { Color, ShapeRenderer } from "gdxts";
-import { Spartial } from "../../component/Spatial";
-import { Constants } from "../../Constant";
-import { GameState } from "../../dto/GameState";
+import { Spartial } from "../component/Spatial";
+import { Constants } from "../Constant";
+import { GameState } from "../dto/GameState";
 
 const GRID_WIDTH = Constants.SCREEN_WIDTH / 10;
 const GRID_HEIGHT = GRID_WIDTH;

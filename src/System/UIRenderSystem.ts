@@ -11,6 +11,7 @@ import { Health } from "../component/Health";
 import { Spartial } from "../component/Spatial";
 import { Constants } from "../Constant";
 import { ConfigGame } from "../dto/ConfigGame";
+import { CurrentSkillLevel } from "../dto/CurrentSkillLevel";
 import { GameState } from "../dto/GameState";
 import { LevelState } from "../dto/LevelState";
 
@@ -25,6 +26,7 @@ export class UIRenderSystem extends System {
   @Inject("levelState") levelState: LevelState;
   @Inject("font") font: BitmapFont;
   @Inject("font2") font2: BitmapFont;
+  @Inject("currentSkillLevel") currentSkillLevel: CurrentSkillLevel;
 
   pauseIcon: Texture;
   playIcon: Texture;

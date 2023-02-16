@@ -26,6 +26,8 @@ export const init = async () => {
   await assetManager.loadTexture("./knight2.png", "knight2");
   await assetManager.loadTexture("./knight3.png", "knight3");
   await assetManager.loadTexture("./knight4.png", "knight4");
+  await assetManager.loadTexture("./arrowUp.png", "arrowUp");
+  await assetManager.loadTexture("./arrowDown.png", "arrowDown");
 
   Game.shared.setScreen(await createGameScreen(assetManager, viewport));
 

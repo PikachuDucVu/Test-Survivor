@@ -4,4 +4,5 @@ export interface GameState {
   bulletIDs: number[];
   protectBall: number[];
   superBulletIDs: number[];
+  fireBallIDs: number[];
 }

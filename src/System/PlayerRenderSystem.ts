@@ -66,7 +66,7 @@ export class PlayerRenderSystem extends System {
         spartial.pos.y - this.offset - 15,
         this.width * (healthPlayer.hp / healthPlayer.maxHP),
         15,
-        Color.RED
+        healthPlayer.hp >= 50 ? Color.GREEN : Color.RED
       );
       this.shapeRenderer.rect(
         false,

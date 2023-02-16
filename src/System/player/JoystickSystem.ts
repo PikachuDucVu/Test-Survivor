@@ -13,12 +13,14 @@ export class JoystickSystem extends System {
     Constants.DEFAULT_DIRECTION_Y
   );
 
-  initialized(): void {}
   process(): void {
     //moveMainChar
     if (
-      this.inputHandler.isTouched() &&
-      this.inputHandler.getTouchedWorldCoord().y < Constants.SCREEN_HEIGHT / 2
+      (this.inputHandler.isTouched() &&
+        this.inputHandler.getTouchedWorldCoord().y <
+          Constants.SCREEN_HEIGHT / 2 + 50 &&
+        this.inputHandler.getTouchedWorldCoord().y > 300) ||
+      this.joyStick.touched
     ) {
       if (this.joyStick.touched === false) {
         this.joyStick.origin.setVector(
@@ -67,8 +69,13 @@ export class JoystickSystem extends System {
       this.tempDirection.setVector(this.joyStick.direction);
       this.joyStick.touched = false;
       this.joyStick.dragging = false;
-      this.joyStick.origin.set(375, 300);
-      this.joyStick.thumbPos.set(375, 300);
+      this.joyStick.origin.set(375, 400);
+      this.joyStick.thumbPos.set(375, 400);
+    }
+
+    if (!this.inputHandler.isTouched()) {
+      this.joyStick.touched = false;
+      this.joyStick.dragging = false;
     }
   }
 }

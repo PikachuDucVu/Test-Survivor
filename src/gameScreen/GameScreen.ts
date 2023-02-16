@@ -2,7 +2,6 @@ import { Archetype, World } from "flat-ecs";
 import {
   AssetManager,
   BitmapFont,
-  InputHandler,
   OrthoCamera,
   PolygonBatch,
   Screen,
@@ -20,7 +19,7 @@ import { ConfigGame } from "../dto/ConfigGame";
 import { GameState } from "../dto/GameState";
 import { JoyStick } from "../dto/JoyStick";
 import { LevelState } from "../dto/LevelState";
-import { GridMapRenderSystem } from "../System/player/GridMapRenderSystem";
+import { GridMapRenderSystem } from "../System/GridMapRenderSystem";
 import { PowerEnemy } from "../dto/PowerEnemy";
 import { PauseMovementSystem } from "../System/PauseMovementSystem";
 import { CameraProcessingSystem } from "../System/CameraProcessingSystem";
@@ -42,6 +41,12 @@ import { UIRenderSystem } from "../System/UIRenderSystem";
 import { SuperBulletProcessSystem } from "../System/player/SuperBulletProcessSystem";
 import { SuperBulletSpawningSystem } from "../System/player/SuperBulletSpawningSystem";
 import { SuperBulletRenderSystem } from "../System/player/SuperBulletRenderSystem";
+import { CurrentSkillLevel } from "../dto/CurrentSkillLevel";
+import { UpdateSkillProgressSystem } from "../System/UpgradeSkillProgressSystem";
+import { UpgradeSkillUISystem } from "../System/UpgradeSkillUISystem";
+import { FireBallSpawningSystem } from "../System/player/FireBallSpawningSystem";
+import { FireBallProcessSystem } from "../System/player/FireBallProcessSystem";
+import { FireBallRenderSystem } from "../System/player/FireBallRenderSystem";
 
 export const createGameScreen = async (
   assetManager: AssetManager,
@@ -86,6 +91,7 @@ export const createGameScreen = async (
     bulletIDs: [],
     protectBall: [],
     superBulletIDs: [],
+    fireBallIDs: [],
   };
   const levelState: LevelState = {
     role: 0,
@@ -93,17 +99,23 @@ export const createGameScreen = async (
     maxExp: 10,
     currentLevel: 1,
   };
+  const currentSkillLevel: CurrentSkillLevel = {
+    point: 1000,
+    skill1: 0,
+    skill2: 0,
+    skill3: 0,
+    skill4: 0,
+  };
   const powerEnemy: PowerEnemy = {
     hp: 100,
     damage: 25,
   };
 
   const configGame: ConfigGame = {
-    cooldownBullet: 0.5,
+    attackSpeed: 0.5,
     enemysRespawnTime: 1.25,
-    amountProtectBall: levelState.currentLevel - 1,
-    speedProtectBall: 2.5,
     bigBallCooldown: 1.25,
+    fireBallAttackSpeed: 1.5,
 
     start: true,
     pause: false,
@@ -130,6 +142,7 @@ export const createGameScreen = async (
   world.register("configGame", configGame);
   world.register("levelState", levelState);
   world.register("powerEnemy", powerEnemy);
+  world.register("currentSkillLevel", currentSkillLevel);
 
   world.register("inputHandler", inputHandler);
   world.register("joyStick", joyStick);
@@ -147,17 +160,22 @@ export const createGameScreen = async (
   world.addSystem(new UpgradeLevelSystem(), true);
   world.addSystem(new SuperBulletSpawningSystem(), true);
   world.addSystem(new SuperBulletProcessSystem(), true);
+  world.addSystem(new FireBallSpawningSystem(), true);
+  world.addSystem(new FireBallProcessSystem(), true);
+  world.addSystem(new UpdateSkillProgressSystem(), true);
 
   world.addSystem(new GridMapRenderSystem(), false);
-  world.addSystem(new PlayerRenderSystem(), false);
   world.addSystem(new CameraProcessingSystem(), false);
   world.addSystem(new JoystickRenderSystem(), false);
-  world.addSystem(new EnemyRenderSystem(), false);
+  world.addSystem(new PlayerRenderSystem(), false);
+  world.addSystem(new FireBallRenderSystem(), false);
   world.addSystem(new BulletRenderSystem(), false);
-  world.addSystem(new ProtectBallRenderSystem(), false);
-  world.addSystem(new PauseMovementSystem(), false);
-  world.addSystem(new UIRenderSystem(), false);
   world.addSystem(new SuperBulletRenderSystem(), false);
+  world.addSystem(new EnemyRenderSystem(), false);
+  world.addSystem(new ProtectBallRenderSystem(), false);
+  world.addSystem(new UpgradeSkillUISystem(), false);
+  world.addSystem(new UIRenderSystem(), false);
+  world.addSystem(new PauseMovementSystem(), false);
 
   gl.clearColor(0, 0, 0, 1);
 
